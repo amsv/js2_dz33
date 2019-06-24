@@ -2,13 +2,13 @@ const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-sto
 
 function makeGETRequest(url) {
   return new Promise(function(resolve, reject) {
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open('GET', url);
     xhr.onload = function() {
-      if (this.status !== 4 ) {
+      if (this.status === 200 ) {
         resolve(this.response);
       } else {
-        var error = new Error(this.statusText);
+        const error = new Error(this.statusText);
         error.code = this.status;
         reject(error);
       }
@@ -48,10 +48,8 @@ class GoodsList {
         ,
         error => alert(`Rejected: ${error}`)
       )
-      .then((res) => res.forEach( ell =>this.goods.push(ell) )
-      ) 
-      .then(() => this.render() 
-      ); 
+      .then((res) => res.forEach( ell =>this.goods.push(ell) )) 
+      .then(() => this.render()); 
   }
   render(html = "") {
     const listHtml = this.goods.reduce((acc, good) => {
